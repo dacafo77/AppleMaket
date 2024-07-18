@@ -1,8 +1,18 @@
 package com.example.applemaket
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.media.AudioAttributes
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,5 +64,59 @@ class MainActivity : AppCompatActivity() {
 
         binding.articleRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.articleRecyclerView.adapter = articleAdapter
+
+        binding.bellButton.setOnClickListener{
+            notification()
+        }
+    }
+
+    private fun notification() {
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val builder: NotificationCompat.Builder
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channelId = "one-channel"
+            val channelName = "My Channel One"
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply{
+                description = "My Channel One Description"
+                setShowBadge(true)
+                val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                val audioAttributes = AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build()
+                setSound(uri, audioAttributes)
+                enableVibration(true)
+            }
+            manager.createNotificationChannel(channel)
+            builder = NotificationCompat.Builder(this, channelId)
+        } else {
+            builder = NotificationCompat.Builder(this)
+        }
+
+        val bitmap = BitmapFactory.decodeResource(resources,R.drawable.bell)
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        builder.run {
+            setSmallIcon(R.mipmap.ic_launcher)
+            setLargeIcon(bitmap)
+            setWhen(System.currentTimeMillis())
+            setContentTitle("키워드 알림")
+            setContentText("설정한 키워드에 대한 알림이 도착했습니다!!")
+            setContentIntent(pendingIntent)
+            setAutoCancel(true)
+        }
+
+        manager.notify(1, builder.build())
     }
 }

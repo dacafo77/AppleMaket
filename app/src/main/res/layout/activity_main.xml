@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#ffffff">
 
     <LinearLayout
         android:id="@+id/toolbarLayout"
@@ -24,6 +25,15 @@
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/bellButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/bell"
+            android:layout_marginStart="260dp"
+            android:layout_gravity="center_vertical"
+            />
     </LinearLayout>
 
 
