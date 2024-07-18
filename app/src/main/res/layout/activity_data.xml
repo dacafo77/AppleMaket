@@ -5,8 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".data.DataActivity"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    tools:context=".data.DataActivity">
+
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -35,14 +37,14 @@
                     android:id="@+id/dataUserImageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/usericon"/>
+                    android:src="@drawable/usericon" />
 
                 <ImageView
                     android:layout_width="70dp"
                     android:layout_height="50dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/manner"
 
-                    android:src="@drawable/manner"/>
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
                     android:id="@+id/dataSellerTextView"
@@ -98,6 +100,18 @@
                 app:layout_constraintTop_toBottomOf="@id/dataTitleTextView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintTop_toTopOf="@id/main"
+
+        />
 
     <LinearLayout
         android:id="@+id/bottomNav"

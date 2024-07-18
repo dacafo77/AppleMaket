@@ -38,5 +38,9 @@ class DataActivity : AppCompatActivity() {
         binding.dataPric.text = "${NumberFormat.getNumberInstance(Locale.KOREA).format(price)}원"
         binding.dataImageView.setImageResource(imageUrl)
         binding.dateTextView.text = text
+
+        binding.backButton.setOnClickListener{
+            finish()
+        }
     }
 }
